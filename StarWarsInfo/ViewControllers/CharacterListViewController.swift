@@ -25,7 +25,7 @@ final class CharacterListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "character", for: indexPath)
-        var content = cell.defaultContentConfiguration()
+        _ = cell.defaultContentConfiguration()
         
         return cell
     }
