@@ -19,15 +19,15 @@ enum Link {
             
         case .characters:
             let allCharacters: [URL] = [
-                URL(string: "https://swapi.dev/api/people/?page=9")!,
-                URL(string: "https://swapi.dev/api/people/?page=8")!,
-                URL(string: "https://swapi.dev/api/people/?page=7")!,
-                URL(string: "https://swapi.dev/api/people/?page=6")!,
-                URL(string: "https://swapi.dev/api/people/?page=5")!,
-                URL(string: "https://swapi.dev/api/people/?page=4")!,
-                URL(string: "https://swapi.dev/api/people/?page=3")!,
+                URL(string: "https://swapi.dev/api/people/")!,
                 URL(string: "https://swapi.dev/api/people/?page=2")!,
-                URL(string: "https://swapi.dev/api/people/")!
+                URL(string: "https://swapi.dev/api/people/?page=3")!,
+                URL(string: "https://swapi.dev/api/people/?page=4")!,
+                URL(string: "https://swapi.dev/api/people/?page=5")!,
+                URL(string: "https://swapi.dev/api/people/?page=6")!,
+                URL(string: "https://swapi.dev/api/people/?page=7")!,
+                URL(string: "https://swapi.dev/api/people/?page=8")!,
+                URL(string: "https://swapi.dev/api/people/?page=9")!
             ]
             return allCharacters
         case .starShips:
