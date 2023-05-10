@@ -8,96 +8,72 @@
 import UIKit
 
 final class CharacterListViewController: UITableViewController {
+    
+    // MARK: - Properties
+    
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    private var persons: [Character] = []
 
+    private let networkManager = NetworkManager.shared
+    
+    // MARK: - Life cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchLukeSkywalker()
         fetchCharacters()
-        
-//        fetchStarShips()
-//        fetchPlanets()
+        tableView.rowHeight = 80
     }
-
-    // MARK: - Table view data source
+    
+    // MARK: - Segue
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let detailsVC = segue.destination as? CharacterDetailsViewController
+        detailsVC?.character = sender as? Character
+    }
+    
+    // MARK: - UITableViewDataSource
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return persons.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "character", for: indexPath)
-        _ = cell.defaultContentConfiguration()
-        
+        var content = cell.defaultContentConfiguration()
+        let character = persons[indexPath.row]
+        content.text = character.name
+        content.secondaryText = character.gender
+        content.image = UIImage(named: character.name)
+        content.imageProperties.cornerRadius = tableView.rowHeight / 2
+        cell.contentConfiguration = content
+        activityIndicator.stopAnimating()
+  
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let character = persons[indexPath.row]
+        performSegue(withIdentifier: "showDetails", sender: character)
     }
 }
 
+    // MARK: - Extensions
+
 extension CharacterListViewController {
-    
     private func fetchCharacters() {
-        URLSession.shared.dataTask(with: Link.characters.url) { data, _, error in
-            guard let data else {
-                print(error?.localizedDescription ?? "No error description")
-                return
+        for character in Link.characters.url {
+            networkManager.fetch(Characters.self, from: character) { [weak self] result in
+                switch result {
+                case .success(let characters):
+                    self?.persons.append(contentsOf: characters.results)
+                    self?.persons.sort { $0.name < $1.name }
+                    self?.tableView.reloadData()
+                case .failure(let error):
+                    print(error)
+                }
             }
-            
-            do {
-                let decoder = JSONDecoder()
-                let characters = try decoder.decode(Characters.self, from: data)
-                print(characters)
-            } catch {
-                print(error.localizedDescription)
-            }
-        }.resume()
+        }
     }
-    
-    private func fetchLukeSkywalker() {
-        URLSession.shared.dataTask(with: Person.lukeSkywalker.url) { data, _, error in
-            guard let data else {
-                print(error?.localizedDescription ?? "No error description")
-                return
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                let character = try decoder.decode(Character.self, from: data)
-                print(character)
-            } catch {
-                print(error.localizedDescription)
-            }
-        }.resume()
-    }
-    
-//    private func fetchStarShips() {
-//        URLSession.shared.dataTask(with: Link.starShips.url) { data, _, error in
-//            guard let data else {
-//                print(error?.localizedDescription ?? "No error description")
-//                return
-//            }
-//
-//            do {
-//                let decoder = JSONDecoder()
-//                let ships = try decoder.decode(Ships.self, from: data)
-//                print(ships)
-//            } catch {
-//                print(error.localizedDescription)
-//            }
-//        }.resume()
-//    }
-    
-//    private func fetchPlanets() {
-//        URLSession.shared.dataTask(with: Link.planets.url) { data, _, error in
-//            guard let data else {
-//                print(error?.localizedDescription ?? "No error description")
-//                return
-//            }
-//
-//            do {
-//                let decoder = JSONDecoder()
-//                let planets = try decoder.decode(Planets.self, from: data)
-//                print(planets)
-//            } catch {
-//                print(error.localizedDescription)
-//            }
-//        }.resume()
-//    }
 }
+        
