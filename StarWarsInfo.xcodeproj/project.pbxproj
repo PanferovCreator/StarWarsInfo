@@ -7,19 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AB4FE07F2A056C32001BB5BD /* Planet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4FE07E2A056C32001BB5BD /* Planet.swift */; };
+		AB3193152A0A175E00B6AC96 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3193142A0A175E00B6AC96 /* NetworkManager.swift */; };
 		AB6BE9FB2A054692004BFC93 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6BE9FA2A054692004BFC93 /* AppDelegate.swift */; };
 		AB6BE9FD2A054692004BFC93 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6BE9FC2A054692004BFC93 /* SceneDelegate.swift */; };
 		AB6BEA022A054692004BFC93 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB6BEA002A054692004BFC93 /* Main.storyboard */; };
 		AB6BEA042A054693004BFC93 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB6BEA032A054693004BFC93 /* Assets.xcassets */; };
 		AB6BEA072A054693004BFC93 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB6BEA052A054693004BFC93 /* LaunchScreen.storyboard */; };
-		AB6BEA132A054763004BFC93 /* Ship.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6BEA122A054763004BFC93 /* Ship.swift */; };
 		AB6BEA192A0549C5004BFC93 /* CharacterListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6BEA182A0549C5004BFC93 /* CharacterListViewController.swift */; };
 		AB6BEA1B2A054B70004BFC93 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6BEA1A2A054B70004BFC93 /* Character.swift */; };
+		ABACE17A2A08D810001EE8A9 /* ShipListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABACE1792A08D810001EE8A9 /* ShipListViewController.swift */; };
+		ABACE17C2A08D828001EE8A9 /* PlanetListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABACE17B2A08D828001EE8A9 /* PlanetListViewController.swift */; };
+		ABACE17E2A08E371001EE8A9 /* ShipDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABACE17D2A08E371001EE8A9 /* ShipDetailsViewController.swift */; };
+		ABACE1802A08E38D001EE8A9 /* PlanetDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABACE17F2A08E38D001EE8A9 /* PlanetDetailsViewController.swift */; };
+		ABACE1862A08F321001EE8A9 /* SpringAnimation in Frameworks */ = {isa = PBXBuildFile; productRef = ABACE1852A08F321001EE8A9 /* SpringAnimation */; };
+		ABBE01DB2A06D74700EB6410 /* CharacterDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBE01DA2A06D74700EB6410 /* CharacterDetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		AB4FE07E2A056C32001BB5BD /* Planet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Planet.swift; sourceTree = "<group>"; };
+		AB3193142A0A175E00B6AC96 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		AB6BE9F72A054692004BFC93 /* StarWarsInfo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StarWarsInfo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB6BE9FA2A054692004BFC93 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AB6BE9FC2A054692004BFC93 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -27,9 +32,13 @@
 		AB6BEA032A054693004BFC93 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AB6BEA062A054693004BFC93 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AB6BEA082A054693004BFC93 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AB6BEA122A054763004BFC93 /* Ship.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ship.swift; sourceTree = "<group>"; };
 		AB6BEA182A0549C5004BFC93 /* CharacterListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterListViewController.swift; sourceTree = "<group>"; };
 		AB6BEA1A2A054B70004BFC93 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
+		ABACE1792A08D810001EE8A9 /* ShipListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShipListViewController.swift; sourceTree = "<group>"; };
+		ABACE17B2A08D828001EE8A9 /* PlanetListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetListViewController.swift; sourceTree = "<group>"; };
+		ABACE17D2A08E371001EE8A9 /* ShipDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShipDetailsViewController.swift; sourceTree = "<group>"; };
+		ABACE17F2A08E38D001EE8A9 /* PlanetDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetDetailsViewController.swift; sourceTree = "<group>"; };
+		ABBE01DA2A06D74700EB6410 /* CharacterDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,12 +46,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABACE1862A08F321001EE8A9 /* SpringAnimation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AB3193132A0A173500B6AC96 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				AB3193142A0A175E00B6AC96 /* NetworkManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		AB6BE9EE2A054692004BFC93 = {
 			isa = PBXGroup;
 			children = (
@@ -65,6 +83,7 @@
 				AB6BEA0F2A0546C4004BFC93 /* ViewControllers */,
 				AB6BEA102A0546D2004BFC93 /* Storyboards */,
 				AB6BEA112A05471E004BFC93 /* Models */,
+				AB3193132A0A173500B6AC96 /* Services */,
 				AB6BEA0E2A0546BA004BFC93 /* App */,
 				AB6BEA032A054693004BFC93 /* Assets.xcassets */,
 			);
@@ -85,6 +104,11 @@
 			isa = PBXGroup;
 			children = (
 				AB6BEA182A0549C5004BFC93 /* CharacterListViewController.swift */,
+				ABACE1792A08D810001EE8A9 /* ShipListViewController.swift */,
+				ABACE17B2A08D828001EE8A9 /* PlanetListViewController.swift */,
+				ABBE01DA2A06D74700EB6410 /* CharacterDetailsViewController.swift */,
+				ABACE17D2A08E371001EE8A9 /* ShipDetailsViewController.swift */,
+				ABACE17F2A08E38D001EE8A9 /* PlanetDetailsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -102,8 +126,6 @@
 			isa = PBXGroup;
 			children = (
 				AB6BEA1A2A054B70004BFC93 /* Character.swift */,
-				AB6BEA122A054763004BFC93 /* Ship.swift */,
-				AB4FE07E2A056C32001BB5BD /* Planet.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -124,6 +146,9 @@
 			dependencies = (
 			);
 			name = StarWarsInfo;
+			packageProductDependencies = (
+				ABACE1852A08F321001EE8A9 /* SpringAnimation */,
+			);
 			productName = StarWarsInfo;
 			productReference = AB6BE9F72A054692004BFC93 /* StarWarsInfo.app */;
 			productType = "com.apple.product-type.application";
@@ -152,6 +177,9 @@
 				Base,
 			);
 			mainGroup = AB6BE9EE2A054692004BFC93;
+			packageReferences = (
+				ABACE1842A08F321001EE8A9 /* XCRemoteSwiftPackageReference "SpringAnimation" */,
+			);
 			productRefGroup = AB6BE9F82A054692004BFC93 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -179,10 +207,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB6BEA132A054763004BFC93 /* Ship.swift in Sources */,
 				AB6BEA192A0549C5004BFC93 /* CharacterListViewController.swift in Sources */,
 				AB6BEA1B2A054B70004BFC93 /* Character.swift in Sources */,
-				AB4FE07F2A056C32001BB5BD /* Planet.swift in Sources */,
+				AB3193152A0A175E00B6AC96 /* NetworkManager.swift in Sources */,
+				ABACE17A2A08D810001EE8A9 /* ShipListViewController.swift in Sources */,
+				ABACE17E2A08E371001EE8A9 /* ShipDetailsViewController.swift in Sources */,
+				ABACE1802A08E38D001EE8A9 /* PlanetDetailsViewController.swift in Sources */,
+				ABBE01DB2A06D74700EB6410 /* CharacterDetailsViewController.swift in Sources */,
+				ABACE17C2A08D828001EE8A9 /* PlanetListViewController.swift in Sources */,
 				AB6BE9FB2A054692004BFC93 /* AppDelegate.swift in Sources */,
 				AB6BE9FD2A054692004BFC93 /* SceneDelegate.swift in Sources */,
 			);
@@ -260,6 +292,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				"INFOPLIST_KEY_UIUserInterfaceStyle[sdk=iphoneos*]" = Dark;
+				"INFOPLIST_KEY_UIUserInterfaceStyle[sdk=iphonesimulator*]" = Dark;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -410,6 +444,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		ABACE1842A08F321001EE8A9 /* XCRemoteSwiftPackageReference "SpringAnimation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/LexDeBash/SpringAnimation";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.3.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		ABACE1852A08F321001EE8A9 /* SpringAnimation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = ABACE1842A08F321001EE8A9 /* XCRemoteSwiftPackageReference "SpringAnimation" */;
+			productName = SpringAnimation;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = AB6BE9EF2A054692004BFC93 /* Project object */;
 }
