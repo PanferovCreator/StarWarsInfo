@@ -8,7 +8,6 @@
 import UIKit
 import SpringAnimation
 
-
 final class ShipDetailsViewController: UIViewController {
 
     // MARK: - Properties

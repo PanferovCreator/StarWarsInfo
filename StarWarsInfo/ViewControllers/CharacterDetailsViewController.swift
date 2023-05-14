@@ -26,7 +26,6 @@ final class CharacterDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchPlanet()
 
         characterImageView.image = UIImage(named: character.name)
         navigationItem.title = character.name
@@ -54,19 +53,6 @@ extension SpringView {
         self.layer.borderWidth = 3
         self.layer.borderColor = UIColor.systemMint.cgColor
         self.layer.cornerRadius = 15
-    }
-}
-
-extension CharacterDetailsViewController {
-    private func fetchPlanet() {
-        networkManager.fetch(Planet.self, from: character.homeworld) { [weak self] result in
-            switch result {
-            case .success(let planet):
-                self?.homeworldLabel.text = "homeworld: \(planet.name)"
-            case .failure(let error):
-                print(error)
-            }
-        }
     }
 }
 
