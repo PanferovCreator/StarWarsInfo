@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Alamofire
 
     // MARK: - Enums
 
@@ -14,48 +15,17 @@ enum Link {
     case starShips
     case planets
     
-    var url: [URL] {
+    var url: URL {
         switch self {
             
         case .characters:
-            let allCharacters: [URL] = [
-                URL(string: "https://swapi.dev/api/people/")!,
-                URL(string: "https://swapi.dev/api/people/?page=2")!,
-                URL(string: "https://swapi.dev/api/people/?page=3")!,
-                URL(string: "https://swapi.dev/api/people/?page=4")!,
-                URL(string: "https://swapi.dev/api/people/?page=5")!,
-                URL(string: "https://swapi.dev/api/people/?page=6")!,
-                URL(string: "https://swapi.dev/api/people/?page=7")!,
-                URL(string: "https://swapi.dev/api/people/?page=8")!,
-                URL(string: "https://swapi.dev/api/people/?page=9")!
-            ]
-            return allCharacters
+            return URL(string: "https://swapi.dev/api/people/")!
         case .starShips:
-            let allStarships: [URL] = [
-                URL(string: "https://swapi.dev/api/starships/")!,
-                URL(string: "https://swapi.dev/api/starships/?page=2")!,
-                URL(string: "https://swapi.dev/api/starships/?page=3")!,
-                URL(string: "https://swapi.dev/api/starships/?page=4")!
-            ]
-            return allStarships
+            return URL(string: "https://swapi.dev/api/starships/")!
         case .planets:
-            let allPlanets: [URL] = [
-                URL(string: "https://swapi.dev/api/planets/")!,
-                URL(string: "https://swapi.dev/api/planets/?page=2")!,
-                URL(string: "https://swapi.dev/api/planets/?page=3")!,
-                URL(string: "https://swapi.dev/api/planets/?page=4")!,
-                URL(string: "https://swapi.dev/api/planets/?page=5")!,
-                URL(string: "https://swapi.dev/api/planets/?page=6")!
-            ]
-            return allPlanets
+            return URL(string: "https://swapi.dev/api/planets/")!
         }
     }
-}
-
-enum NetworkError: Error {
-    case invalidURL
-    case noData
-    case decodingError
 }
 
 final class NetworkManager {
@@ -70,27 +40,98 @@ final class NetworkManager {
     
     // MARK: - Fetch Data
     
-    func fetch<T: Decodable>(_ type: T.Type, from url: URL, completion: @escaping(Result<T, NetworkError>) -> Void) {
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            guard let data else {
-                completion(.failure(.noData))
-                print(error?.localizedDescription ?? "No error description")
-                return
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let dataModel = try decoder.decode(T.self, from: data)
-                DispatchQueue.main.async {
-                    completion(.success(dataModel))
+    func fetchData(from url: URL, completion: @escaping(Result<Characters, AFError>) -> Void) {
+        AF.request(url)
+            .validate()
+            .responseJSON { dataResponse in
+                switch dataResponse.result {
+                case .success(let pageData):
+                    let data = Characters.getCharacters(from: pageData)
+                    completion(.success(data))
+                case .failure(let error):
+                    completion(.failure(error))
                 }
-            } catch {
-                completion(.failure(.decodingError))
             }
-            
-        }.resume()
+    }
+    
+    func fetchPage(from url: String?, completion: @escaping(Result<Characters, AFError>) -> Void) {
+        guard let stringURL = url, let url = URL(string: stringURL) else {
+            return
+        }
+        AF.request(url)
+            .validate()
+            .responseJSON { dataResponse in
+                switch dataResponse.result {
+                case .success(let pageData):
+                    let page = Characters.getCharacters(from: pageData)
+                    completion(.success(page))
+                    
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+    }
+    
+    func fetchDataShips(from url: URL, completion: @escaping(Result<Ships, AFError>) -> Void) {
+        AF.request(url)
+            .validate()
+            .responseJSON { dataResponse in
+                switch dataResponse.result {
+                case .success(let pageData):
+                    let data = Ships.getShips(from: pageData)
+                    completion(.success(data))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+    }
+    
+    func fetchPageShips(from url: String?, completion: @escaping(Result<Ships, AFError>) -> Void) {
+        guard let stringURL = url, let url = URL(string: stringURL) else {
+            return
+        }
+        AF.request(url)
+            .validate()
+            .responseJSON { dataResponse in
+                switch dataResponse.result {
+                case .success(let pageData):
+                    let page = Ships.getShips(from: pageData)
+                    completion(.success(page))
+                    
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+    }
+    
+    func fetchPlanetsData(from url: URL, completion: @escaping(Result<Planets, AFError>) -> Void) {
+        AF.request(url)
+            .validate()
+            .responseJSON { dataResponse in
+                switch dataResponse.result {
+                case .success(let pageData):
+                    let data = Planets.getPlanets(from: pageData)
+                    completion(.success(data))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+    }
+    
+    func fetchPagePlanets(from url: String?, completion: @escaping(Result<Planets, AFError>) -> Void) {
+        guard let stringURL = url, let url = URL(string: stringURL) else {
+            return
+        }
+        AF.request(url)
+            .validate()
+            .responseJSON { dataResponse in
+                switch dataResponse.result {
+                case .success(let pageData):
+                    let page = Planets.getPlanets(from: pageData)
+                    completion(.success(page))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
     }
 }
-
-
