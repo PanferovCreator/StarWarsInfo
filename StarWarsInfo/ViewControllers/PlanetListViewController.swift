@@ -13,14 +13,15 @@ final class PlanetListViewController: UITableViewController {
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    private var planets: [Planet] = []
+    private var swapiPlanets: Planets?
+    private var nextPage: String?
     private let networkManager = NetworkManager.shared
     
     // MARK: - Life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchPlanets()
+        fetchData()
         tableView.rowHeight = 80
     }
     
@@ -34,12 +35,13 @@ final class PlanetListViewController: UITableViewController {
     // MARK: - UITableViewDataSource
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return planets.count
+        return swapiPlanets?.results.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "planet", for: indexPath)
         var content = cell.defaultContentConfiguration()
+        let planets = Planet.getPlanet(from: swapiPlanets?.results as Any)
         let planet = planets[indexPath.row]
         content.text = planet.name
         content.secondaryText = planet.climate
@@ -51,25 +53,46 @@ final class PlanetListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let planets = Planet.getPlanet(from: swapiPlanets?.results as Any)
         let planet = planets[indexPath.row]
         performSegue(withIdentifier: "showDetails", sender: planet)
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let results = swapiPlanets?.results else { return }
+        if results.count - indexPath.row == 1 {
+            getNextPage(from: nextPage)
+        }
     }
 }
 
     // MARK: - Extensions
 
 extension PlanetListViewController {
-    private func fetchPlanets() {
-        for planet in Link.planets.url {
-            networkManager.fetch(Planets.self, from: planet) { [weak self] result in
-                switch result {
-                case .success(let planets):
-                    self?.planets.append(contentsOf: planets.results)
-                    self?.planets.sort { $0.name < $1.name }
-                    self?.tableView.reloadData()
-                case .failure(let error):
-                    print(error)
-                }
+    
+    private func fetchData() {
+        networkManager.fetchPlanetsData(from: Link.planets.url) { [weak self] result in
+            switch result {
+            case .success(let swapiPlanets):
+                self?.swapiPlanets = swapiPlanets
+                self?.nextPage = swapiPlanets.next
+                self?.tableView.reloadData()
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+
+    private func getNextPage(from url: String?) {
+        networkManager.fetchPagePlanets(from: url) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let swapiPlanet):
+                self.swapiPlanets?.results.append(contentsOf: swapiPlanet.results)
+                self.nextPage = swapiPlanet.next
+                self.tableView.reloadData()
+            case .failure(let error):
+                print(error)
             }
         }
     }

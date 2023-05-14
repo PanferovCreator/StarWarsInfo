@@ -7,21 +7,23 @@
 
 import UIKit
 
+
 final class CharacterListViewController: UITableViewController {
     
     // MARK: - Properties
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    private var persons: [Character] = []
-
+    private var swapi: Characters?
+    private var nextPage: String?
     private let networkManager = NetworkManager.shared
     
     // MARK: - Life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchCharacters()
+        
+        fetchData()
         tableView.rowHeight = 80
     }
     
@@ -35,25 +37,34 @@ final class CharacterListViewController: UITableViewController {
     // MARK: - UITableViewDataSource
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return persons.count
+        return swapi?.results.count ?? 0
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let results = swapi?.results else { return }
+        if results.count - indexPath.row == 1 {
+            getNextPage(from: nextPage)
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "character", for: indexPath)
         var content = cell.defaultContentConfiguration()
-        let character = persons[indexPath.row]
+        let characters = Character.getCharacter(from: swapi?.results as Any)
+        let character = characters[indexPath.row]
         content.text = character.name
         content.secondaryText = character.gender
         content.image = UIImage(named: character.name)
         content.imageProperties.cornerRadius = tableView.rowHeight / 2
         cell.contentConfiguration = content
         activityIndicator.stopAnimating()
-  
+    
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let character = persons[indexPath.row]
+        let characters = Character.getCharacter(from: swapi?.results as Any)
+        let character = characters[indexPath.row]
         performSegue(withIdentifier: "showDetails", sender: character)
     }
 }
@@ -61,19 +72,32 @@ final class CharacterListViewController: UITableViewController {
     // MARK: - Extensions
 
 extension CharacterListViewController {
-    private func fetchCharacters() {
-        for character in Link.characters.url {
-            networkManager.fetch(Characters.self, from: character) { [weak self] result in
-                switch result {
-                case .success(let characters):
-                    self?.persons.append(contentsOf: characters.results)
-                    self?.persons.sort { $0.name < $1.name }
-                    self?.tableView.reloadData()
-                case .failure(let error):
-                    print(error)
-                }
+
+    private func fetchData() {
+        networkManager.fetchData(from: Link.characters.url) { [weak self] result in
+            switch result {
+            case .success(let swapi):
+                self?.swapi = swapi
+                self?.nextPage = swapi.next
+                self?.tableView.reloadData()
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+
+    private func getNextPage(from url: String?) {
+        networkManager.fetchPage(from: url) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let swapi):
+                self.swapi?.results.append(contentsOf: swapi.results)
+                self.nextPage = swapi.next
+                self.tableView.reloadData()
+            case .failure(let error):
+                print(error)
             }
         }
     }
 }
-        
+

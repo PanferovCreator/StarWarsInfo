@@ -13,14 +13,15 @@ final class ShipListViewController: UITableViewController {
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    private var ships: [Ship] = []
+    private var swapiShips: Ships?
+    private var nextPage: String?
     private let networkManager = NetworkManager.shared
     
     // MARK: - Life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchStarShips()
+        fetchData()
         tableView.rowHeight = 80
     }
 
@@ -34,12 +35,13 @@ final class ShipListViewController: UITableViewController {
     // MARK: - UITableViewDataSource
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ships.count
+        return swapiShips?.results.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ship", for: indexPath)
         var content = cell.defaultContentConfiguration()
+        let ships = Ship.getShip(from: swapiShips?.results as Any)
         let ship = ships[indexPath.row]
         content.text = ship.name
         content.secondaryText = ship.manufacturer
@@ -50,7 +52,15 @@ final class ShipListViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let results = swapiShips?.results else { return }
+        if results.count - indexPath.row == 1 {
+            getNextPage(from: nextPage)
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let ships = Ship.getShip(from: swapiShips?.results as Any)
         let ship = ships[indexPath.row]
         performSegue(withIdentifier: "showDetails", sender: ship)
     }
@@ -59,17 +69,30 @@ final class ShipListViewController: UITableViewController {
     // MARK: - Extensions
 
 extension ShipListViewController {
-    private func fetchStarShips() {
-        for ship in Link.starShips.url {
-            networkManager.fetch(Ships.self, from: ship) { [weak self] result in
-                switch result {
-                case .success(let ships):
-                    self?.ships.append(contentsOf: ships.results)
-                    self?.ships.sort { $0.name < $1.name}
-                    self?.tableView.reloadData()
-                case .failure(let error):
-                    print(error)
-                }
+    
+    private func fetchData() {
+        networkManager.fetchDataShips(from: Link.starShips.url) { [weak self] result in
+            switch result {
+            case .success(let swapiShips):
+                self?.swapiShips = swapiShips
+                self?.nextPage = swapiShips.next
+                self?.tableView.reloadData()
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+
+    private func getNextPage(from url: String?) {
+        networkManager.fetchPageShips(from: url) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let swapiShip):
+                self.swapiShips?.results.append(contentsOf: swapiShip.results)
+                self.nextPage = swapiShip.next
+                self.tableView.reloadData()
+            case .failure(let error):
+                print(error)
             }
         }
     }
