@@ -21,6 +21,7 @@
 		ABACE1802A08E38D001EE8A9 /* PlanetDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABACE17F2A08E38D001EE8A9 /* PlanetDetailsViewController.swift */; };
 		ABACE1862A08F321001EE8A9 /* SpringAnimation in Frameworks */ = {isa = PBXBuildFile; productRef = ABACE1852A08F321001EE8A9 /* SpringAnimation */; };
 		ABBE01DB2A06D74700EB6410 /* CharacterDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBE01DA2A06D74700EB6410 /* CharacterDetailsViewController.swift */; };
+		ABBE79B82A0E7F7400019C87 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = ABBE79B72A0E7F7400019C87 /* Alamofire */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +48,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ABACE1862A08F321001EE8A9 /* SpringAnimation in Frameworks */,
+				ABBE79B82A0E7F7400019C87 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,6 +150,7 @@
 			name = StarWarsInfo;
 			packageProductDependencies = (
 				ABACE1852A08F321001EE8A9 /* SpringAnimation */,
+				ABBE79B72A0E7F7400019C87 /* Alamofire */,
 			);
 			productName = StarWarsInfo;
 			productReference = AB6BE9F72A054692004BFC93 /* StarWarsInfo.app */;
@@ -179,6 +182,7 @@
 			mainGroup = AB6BE9EE2A054692004BFC93;
 			packageReferences = (
 				ABACE1842A08F321001EE8A9 /* XCRemoteSwiftPackageReference "SpringAnimation" */,
+				ABBE79B62A0E7F7400019C87 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = AB6BE9F82A054692004BFC93 /* Products */;
 			projectDirPath = "";
@@ -454,6 +458,14 @@
 				minimumVersion = 0.3.0;
 			};
 		};
+		ABBE79B62A0E7F7400019C87 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = exactVersion;
+				version = 5.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -461,6 +473,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = ABACE1842A08F321001EE8A9 /* XCRemoteSwiftPackageReference "SpringAnimation" */;
 			productName = SpringAnimation;
+		};
+		ABBE79B72A0E7F7400019C87 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = ABBE79B62A0E7F7400019C87 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
